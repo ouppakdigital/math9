@@ -425,11 +425,11 @@
     /* ---------------- Quiz data ---------------- */
     const quizData = [
       {
-        q: "A figure is enlarged by a scale factor of k = 3. If the original side length is 4 cm, what is the new side length?",
+        q: "A figure is enlarged by a scale factor of \\(k = 3\\). If the original side length is 4 cm, what is the new side length?",
         choices: ["1.33 cm", "7 cm", "12 cm", "64 cm"],
         correct: 2,
         explain: `
-      To find the new length in an enlargement, multiply the original length by the scale factor: 4 x 3 = 12.
+      To find the new length in an enlargement, multiply the original length by the scale factor: \\(4 \\times 3 = 12\\).
     `
       },
       {
@@ -450,7 +450,7 @@
         questionImage: "mw8u9q3.png",
         choices: [
           "The second triangle must also have a leg of 5 cm.",
-          "The second triangle must have an area of 65 cm².",
+          "The second triangle must have an area of 65 \\(\\text{cm}^2\\).",
           "the third angle must be 45 degrees.",
           "The perimeter of both triangles must be 30 cm."
         ],
@@ -460,13 +460,13 @@
     `
       },
       {
-        q: "The two rectangles shown below are mathematically similar. Using the scale factor, what is the value of the missing width 'w'?",
+        q: "The two rectangles shown below are mathematically similar. Using the scale factor, what is the value of the missing width '\\(w\\)'?",
         questionImage: "mw8u9q4.png",
         choices: ["8 cm", "10 cm", "15 cm", "19 cm"],
         correct: 1,
         explain: `
       In similar figures, the ratio of corresponding sides is equal. 
-      10/25 = 4/b. Cross-multiplying gives 10b = 100, so b = 10 cm.
+      \\(\\frac{10}{25} = \\frac{4}{b}\\). Cross-multiplying gives \\(10b = 100\\), so \\(b = 10\\) cm.
     `
       },
       {
@@ -517,7 +517,7 @@
     `
       },
       {
-        q: "In the figure below, Triangle ABC is congruent to Triangle DEF (triangle ABC ≅ triangle DEF). Based on the markings, which congruence postulate is being applied?",
+        q: "In the figure below, Triangle ABC is congruent to Triangle DEF (\\(\\triangle ABC \\cong \\triangle DEF\\)). Based on the markings, which congruence postulate is being applied?",
         questionImage: "mw8u9q9.png",
         choices: [
           "SSS (Side-Side-Side)",
@@ -535,7 +535,7 @@
         choices: ["25 cm", "30 cm", "45 cm", "15 cm"],
         correct: 1,
         explain: `
-      Similar figures have proportional sides. Since the width doubled (10 to 20), the height must also double (15 x 2 = 30).
+      Similar figures have proportional sides. Since the width doubled (10 to 20), the height must also double (\\(15 \\times 2 = 30\\)).
     `
       }
     ];
@@ -642,9 +642,9 @@
           </div>
           <div class="qbody">
             
-            ${item.image ? `
+            ${(item.image || item.questionImage) ? `
               <div style="text-align:center;margin:12px 0">
-                <img src="${item.image}" alt="Question diagram" class="mcq-figure" onerror="this.style.display='none'; console.warn('Image not found:', '${item.image}')">
+                <img src="${item.image || item.questionImage}" alt="Question diagram" class="mcq-figure" onerror="this.style.display='none'; console.warn('Image not found:', '${item.image || item.questionImage}')">
               </div>
             ` : ''}
             
@@ -687,7 +687,7 @@
           answers[index] = Number(input.value);
           if (!locked[index]) {
             nextBtn.disabled = false;
-            nextBtn.textContent = 'Next';
+            nextBtn.textContent = 'Submit';
           }
         });
       });
@@ -699,7 +699,7 @@
         nextBtn.textContent = (index === quizData.length - 1) ? 'Finish' : 'Next';
         nextBtn.disabled = false;
       } else {
-        nextBtn.textContent = 'Next';
+        nextBtn.textContent = 'Submit';
         nextBtn.disabled = (answers[index] === null);
       }
 
@@ -791,7 +791,7 @@
       // Phase 1: show feedback (lock) if not yet locked
       if (!locked[current]) {
         if (answers[current] === null) {
-          alert('Please select an answer before pressing Next.');
+          alert('Please select an answer before pressing Submit.');
           return;
         }
         locked[current] = true;
@@ -890,6 +890,7 @@
         reviewList.classList.toggle('open', reviewOpen);
         reviewToggleBtn.textContent = reviewOpen ? 'Hide Answers' : 'Review Answers';
       });
+      typesetNow();
     }
 
     // Keep progress responsive
